@@ -1,0 +1,96 @@
+﻿HTTP modules run earlier in the pipeline. If you handle authentication in a message handler, the principal does not get set until the handler runs. Moreover, the principal reverts back to the previous principal when the response leaves the message handler.
+Generally, if you don't need to support self-hosting, an HTTP module is a better option. If you need to support self-hosting, consider a message handler.
+
+Setting the Principal
+
+If your application performs any custom authentication logic, you must set the principal on two places:
+
+Thread.CurrentPrincipal. This property is the standard way to set the thread's principal in .NET.
+HttpContext.Current.User. This property is specific to ASP.NET.
+
+Custom Authorization Filters
+
+To write a custom authorization filter, derive from one of these types:
+
+AuthorizeAttribute. Extend this class to perform authorization logic based on the current user and the user’s roles.
+AuthorizationFilterAttribute. Extend this class to perform synchronous authorization logic that is not necessarily based on the current user or role.
+IAuthorizationFilter. Implement this interface to perform asynchronous authorization logic; for example, if your authorization logic makes asynchronous I/O or network calls. (If your authorization logic is CPU-bound, it is simpler to derive from AuthorizationFilterAttribute, because then you don’t need to write an asynchronous method.)
+
+====
+
+When you select Individual Accounts in the ASP.NET Web Application project template, the project includes:
+
+An OAuth2 authorization server.
+A Web API endpoint for managing user accounts
+An EF model for storing user accounts.
+Here are the main application classes that implement these features:
+
+AccountController. Provides a Web API endpoint for managing user accounts. The Register action is the only one that we used in this tutorial. Other methods on the class support password reset, social logins, and other functionality.
+ApplicationUser, defined in /Models/IdentityModels.cs. This class is the EF model for user accounts in the membership database.
+ApplicationUserManager, defined in /App_Start/IdentityConfig.cs This class derives from UserManager and performs operations on user accounts, such as creating a new user, verifying passwords, and so forth, and automatically persists changes to the database.
+ApplicationOAuthProvider. This object plugs into the OWIN middleware, and processes events raised by the middleware. It derives from OAuthAuthorizationServerProvider.
+
+====
+
+Configuring the Authorization Server
+
+In StartupAuth.cs, the following code configures the OAuth2 authorization server.
+
+PublicClientId = "self";
+OAuthOptions = new OAuthAuthorizationServerOptions
+{
+    TokenEndpointPath = new PathString("/Token"),
+    Provider = new ApplicationOAuthProvider(PublicClientId),
+    AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
+    AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+    // Note: Remove the following line before you deploy to production:
+    AllowInsecureHttp = true
+};
+
+// Enable the application to use bearer tokens to authenticate users
+app.UseOAuthBearerTokens(OAuthOptions);
+The TokenEndpointPath property is the URL path to the authorization server endpoint. That’s the URL that app uses to get the bearer tokens.
+
+The Provider property specifies a provider that plugs into the OWIN middleware, and processes events raised by the middleware.
+
+Here is the basic flow when the app wants to get a token:
+
+To get an access token, the app sends a request to ~/Token.
+The OAuth middleware calls GrantResourceOwnerCredentials on the provider.
+The provider calls the ApplicationUserManager to validate the credentials and create a claims identity.
+If that succeeds, the provider creates an authentication ticket, which is used to generate the token.
+
+
+The OAuth middleware doesn’t know anything about the user accounts. The provider communicates between the middleware and ASP.NET Identity. For more information about implementing the authorization server, see OWIN OAuth 2.0 Authorization Server.
+
+Configuring Web API to use Bearer Tokens
+
+In the WebApiConfig.Register method, the following code sets up authentication for the Web API pipeline:
+
+config.SuppressDefaultHostAuthentication();
+config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+The HostAuthenticationFilter class enables authentication using bearer tokens.
+
+The SuppressDefaultHostAuthentication method tells Web API to ignore any authentication that happens before the request reaches the Web API pipeline, either by IIS or by OWIN middleware. That way, we can restrict Web API to authenticate only using bearer tokens.
+
+When the client requests a protected resource, here is what happens in the Web API pipeline:
+
+The HostAuthentication filter calls the OAuth middleware to validate the token.
+The middleware converts the token into a claims identity.
+At this point, the request is authenticated but not authorized.
+The authorization filter examines the claims identity. If the claims authorize the user for that resource, the request is authorized. By default, the [Authorize] attribute will authorize any request that is authenticated. However, you can authorize by role or by other claims. For more information, see Authentication and Authorization in Web API.
+If the previous steps are successful, the controller returns the protected resource. Otherwise, the client receives a 401 (Unauthorized) error.
+
+====
+
+In Web API 2, you should consider writing an authentication filter or OWIN middleware, instead of an HTTP module.
+
+=====
+
+Got to know by some research -- 
+
+Token generated after Grantresourceownercredential method will have default of lifetime validity, only if we mention timespan its compliying under than timespan
+Token will have clamis[key ,value] and timestamp details bind in it
+Tokens are not persisted anywhere , they are validated by decrypting when they get request 
+http://stackoverflow.com/questions/37507294/how-are-web-api-access-tokens-validated-on-the-server
+

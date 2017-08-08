@@ -1,0 +1,19 @@
+﻿Web API does not automatically return an error to the client when validation fails. It is up to the controller action to check the model state and respond appropriately.
+
+You can also create an action filter to check the model state before the controller action is invoked. The following code shows an example:
+
+
+There was issue in invoking PUT and DELETE method- refered below link for solving the issue
+http://stackoverflow.com/questions/10906411/asp-net-web-api-put-delete-verbs-not-allowed-iis-8
+Removed the module 
+      <remove name="WebDAVModule"/> from System.webserver in config file
+
+{
+"CustID":1,
+"Name":"Rajmohan",
+"Email":"rajmohan@tcs.com",
+"Address":"address111",
+"Contact":"9999999999",
+"BirthDate":null,
+"TranDate":"2016-10-01T15:41:43.01"
+}

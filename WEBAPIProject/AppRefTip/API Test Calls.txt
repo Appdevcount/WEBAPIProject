@@ -1,0 +1,220 @@
+﻿GET
+===
+http://localhost/WEBAPIProject/api/customersapi
+
+User-Agent: Fiddler
+Host: localhost
+accept: application/JSON
+
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Type: application/json; charset=utf-8
+Expires: -1
+Server: Microsoft-IIS/8.5
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Date: Mon, 19 Dec 2016 11:54:33 GMT
+Content-Length: 1048
+
+[{"CustID":3,"Name":"Boopal","Email":"boopal@tcs.com","Address":"address111","Contact":"9999999999","BirthDate":null,"TranDate":"2016-10-01T15:41:43.06"},{"CustID":5,"Name":"Karthik","Email":"karthik@tcs.com","Address":"address111","Contact":"9999999999","BirthDate":null,"TranDate":"2016-10-01T15:41:43.06"},{"CustID":7,"Name":"NoID","Email":"boopal@tcs.com","Address":"address111","Contact":"9999999999","BirthDate":null,"TranDate":"2016-10-01T15:41:43.06"},{"CustID":4,"Name":"Prem","Email":"prem@tcs.com","Address":"address111","Contact":"9999999999","BirthDate":null,"TranDate":"2016-10-01T15:41:43.06"},{"CustID":1,"Name":"Rajmohan","Email":"rajmohan@tcs.com","Address":"address111","Contact":"9999999999","BirthDate":null,"TranDate":"2016-10-01T15:41:43.01"},{"CustID":2,"Name":"Sai","Email":"sai@tcs.com","Address":"address111","Contact":"9999999999","BirthDate":null,"TranDate":"2016-10-01T15:41:43.043"},{"CustID":6,"Name":"Siraj","Email":"sira.deen@gmail.com","Address":"Address","Contact":"9944777777","BirthDate":null,"TranDate":null}]
+
+GET/1
+====
+In URI http://localhost/WEBAPIProject/api/customersapi/1
+(or) using query string http://localhost/WEBAPIProject/api/customersapi?id=1
+(or) using query string http://localhost/WEBAPIProject/getall?id=1
+
+User-Agent: Fiddler
+Host: localhost
+accept: application/JSON
+
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Type: application/json; charset=utf-8
+Expires: -1
+Server: Microsoft-IIS/8.5
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Date: Mon, 19 Dec 2016 12:24:08 GMT
+Content-Length: 156
+
+{"CustID":1,"Name":"Rajmohan","Email":"rajmohan@tcs.com","Address":"address111","Contact":"9999999999","BirthDate":null,"TranDate":"2016-10-01T15:41:43.01"}
+
+PUT
+===
+http://localhost/WEBAPIProject/api/customersapi/1
+User-Agent: Fiddler
+Host: localhost
+accept: application/JSON
+content-type: application/json
+Content-Length: 172
+Request Body
+{
+"CustID":1,
+"Name":"Rajmohan",
+"Email":"rajmohan@tcs.com",
+"Address":"address111",
+"Contact":"9999998889",
+"BirthDate":null,
+"TranDate":"2016-10-01T15:41:43.01"
+}
+
+HTTP/1.1 204 No Content
+Cache-Control: no-cache
+Pragma: no-cache
+Expires: -1
+Server: Microsoft-IIS/8.5
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Date: Mon, 19 Dec 2016 12:52:53 GMT
+
+POST
+====
+http://localhost/WEBAPIProject/api/customersapi/1
+User-Agent: Fiddler
+Host: localhost
+accept: application/JSON
+content-type: application/json
+Content-Length: 176
+Request Body
+{
+"CustID":1,
+"Name":"RajmohanPOST",
+"Email":"rajmohan@tcs.com",
+"Address":"address111",
+"Contact":"9999999999",
+"BirthDate":null,
+"TranDate":"2016-10-01T15:41:43.01"
+}
+
+HTTP/1.1 201 Created
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Type: application/json; charset=utf-8
+Expires: -1
+Location: http://localhost/WEBAPIProject/api/customersapi/9
+Server: Microsoft-IIS/8.5
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Date: Mon, 19 Dec 2016 12:55:24 GMT
+Content-Length: 160
+
+{"CustID":9,"Name":"RajmohanPOST","Email":"rajmohan@tcs.com","Address":"address111","Contact":"9999999999","BirthDate":null,"TranDate":"2016-10-01T15:41:43.01"}
+
+
+
+User Registration
+=================
+
+POST http://localhost/WEBAPIPROJECT/Api/Account/Register HTTP/1.1
+User-Agent: Fiddler
+accept: application/JSON
+content-type: application/json
+Host: localhost
+Content-Length: 107
+
+{
+  "Email": "sira.deen@gmail.com",
+  "Password": "Test@123456",
+  "ConfirmPassword": "Test@123456"
+}
+
+Encountered this issue - Resolved by simplifying the connection string web.config file
+http://stackoverflow.com/questions/23893710/the-entity-type-applicationuser-is-not-part-of-the-model-for-the-current-context
+
+Token Fetching
+=============
+
+POST http://localhost:18387/Token HTTP/1.1
+User-Agent: Fiddler
+accept: application/JSON
+content-type: application/x-www-form-urlencoded
+Host: localhost:18387
+Content-Length: 69
+
+username=sira.deen@gmail.com&password=Test@123456&grant_type=password
+
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Length: 316
+Content-Type: application/json;charset=UTF-8
+Expires: -1
+Server: Microsoft-IIS/8.5
+Access-Control-Allow-Origin: *
+X-Powered-By: ASP.NET
+Date: Tue, 09 May 2017 13:50:54 GMT
+
+{"access_token":"2ZWgmw55JNOKs7OeG-OpjReRiQRr54FRToI1fnQ0NwPbU8CXljezPTms7-_av0Pl7dIqbwNPsEqkUiDsw6_fDnBKTScAKLnTaRWyuOvSjjSQNGvW-2t-PHJNYIMSiRF5vLCQBifPmYKF962RyBsWq3TMNM43uO-VA2eK8767vqWLEf5y6OpU_BUzmvDabjzCIvLNoSGXAmE4PitqLPG3UNT5KWgQp-28hGi_Q9r9NDlCj3sQaP1OgZc-wYajPpQY","token_type":"bearer","expires_in":86399}
+
+{"access_token":"12q5XvZCJBBOmc28npFLzS8S1kGrQezB60V_La1iotVu4t8YbY5LgyV-R8N4TcsSALzeYFWXcczvdJUmn6U6C8FJhR2XzIZYn-tlLfGuTUQY9cqz2K7y98l4YeM71tnKLMF9wfr3fs5Cz-HwhqgzhHEsXesDih5MWPkk13m4_KLApbjK0dz4mAlF0GXVfAoliNodgyVKjHQuWemwoCrZaKlHp7VsTfqWDO4bcs0e1MyFhpnA4hfwy4BlwR4haSUw","token_type":"bearer","expires_in":86399}
+
+{"access_token":"O279larDsFRBQgdhMC7iiGZSnnjk7nDtJuhu1me__oqYYZsm8aJLnfzIMba0DVpVcnPw_eEcamoI7GezBgpbhB_A4WedP-nOs0r65mXBWbL988kP36uYlFmdABwUM68jqNPp_dlhnrbLf1E7H623FHIbkurfaTg5oLoyMmq2kcW_liOmE2AGkuGLbRo387GVF4o7KPvKJlUQGVoP8wEAWrQa9bIcmIBU37gNmUblzO3RrwhFoHZSNTVHcB-Z8ql3","token_type":"bearer","expires_in":86399}
+
+{"access_token":"Atqvfmufh2YXsv0oIGE5scqbNW1KGgVr6h-r372MUEbxObXraA6uHL6eA-ytcQKAYWeub35Ak6mMwo3UskrYJdgt2rP-yxTrf-mtn763S1aVcspZY9oil4pPI2lvSDnke7MIcMahQQC93rknHKrEeB5KewcG3VE54-iGNyK_mNrbYcJWR3aHYZpuDAETV6BGYbvP96tSIIe3R5Xlh2OqlrA5jsBzqsim-Ad43KeXCN2JkLXKfCMBznIo57m78k-g","token_type":"bearer","expires_in":86399}
+
+POST http://localhost:18387/Token HTTP/1.1
+accept: application/JSON
+content-type: application/x-www-form-urlencoded
+Host: localhost:18387
+Content-Length: 70
+
+username=sira1.deen@gmail.com&password=Test@123456&grant_type=password
+
+{"access_token":"jre_ihm3eygHgkes8aTUFKChESZ_b8_BV8vSjCErUqLNHct2LUUIzSgfKXWRnhugAeQccKTtMGcMU2CIWvaocQUsm0z7gPHdoAWyeKdW92VOk8T7aF91cGA3-JPbwECPMU_pU1-giDSpa0wxGuXst-O8Ja-jV07xePcm7H6Y2ZXuf7L3xFR4l6bh1bdZBa__eVAONccZoK-x6n7wqNJGMvscLvvjCrSpmm_jqGnFkzrXMKA6wczgAC4KrGUUH_xF","token_type":"bearer","expires_in":86399}
+
+username=sira2.deen@gmail.com&password=Test@123456&grant_type=password
+
+{"access_token":"1q9-VG7PVagVcxYjObjmHqRhLH0UhSvjlCZ_JppHfZJAjHqtz2c5sxyu4b2ZNz-mwDWwcIganBpbKJJkAs-FixET3tHoMg34og6BXWULz9UMB1ziCz_C16kM2HIdK0ZBTZK78NaWokk_PYV9QW1AyL8VI2pSi-6KLTGx38C411pBVi4Cc-EJafS4SX0t-r4wuWgdMmMMFlCc4FzUvvkeTJk6xrF_79atsfzBTlEwDeoHe89NUkwGIsrZvIY6jhkS","token_type":"bearer","expires_in":86399}
+
+
+Error responses
+
+1)For invalid credentials
+{"error":"invalid_grant","error_description":"The user name or password is incorrect."}
+
+2)Happened when providername is System.Data.SqlClient in connectionstring instead of EntityClient for Database First Model Dataaccess. Reverted bact that to EntityClient providername in web.config connstring
+{"Message":"An error has occurred.",
+"ExceptionMessage":"The 'ObjectContent`1' type failed to serialize the response body for content type 'application/json; charset=utf-8'.","ExceptionType":"System.InvalidOperationException","StackTrace":null,
+"InnerException":{"Message":"An error has occurred.",
+"ExceptionMessage":"The context is being used in Code First mode with code that was generated from an EDMX file for either Database First or Model First development.  This will not work correctly. To fix this problem do not remove the line of code that throws this exception. If you wish to use Database First or Model First, then make sure that the Entity Framework connection string is included in the app.config or web.config of the start-up project. If you are creating your own DbConnection, then make sure that it is an EntityConnection and not some other type of DbConnection, and that you pass it to one of the base DbContext constructors that take a DbConnection. To learn more about Code First, Database First, and Model First see the Entity Framework documentation here: http://go.microsoft.com/fwlink/?LinkId=394715","ExceptionType":"System.Data.Entity.Infrastructure.UnintentionalCodeFirstException",
+"StackTrace":"   at WEBAPIProject.DBEntity_Layer.WEBAPIDataStoreEntities.OnModelCreating(DbModelBuilder modelBuilder) in D:\\Users\\r.sirajudeen\\Documents\\Visual Studio 2015\\Projects\\WEBAPIProject\\WEBAPIProject\\DBEntity Layer\\DBEntities.Context.cs:line 25\r\n   at System.Data.Entity.Internal.LazyInternalContext.CreateModelBuilder()\r\n   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)\r\n   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)\r\n   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()\r\n   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)\r\n   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()\r\n   at System.Data.Entity.Internal.Linq.InternalSet`1.GetEnumerator()\r\n   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.SerializeList(JsonWriter writer, IEnumerable values, JsonArrayContract contract, JsonProperty member, JsonContainerContract collectionContract, JsonProperty containerProperty)\r\n   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.Serialize(JsonWriter jsonWriter, Object value, Type objectType)\r\n   at Newtonsoft.Json.JsonSerializer.SerializeInternal(JsonWriter jsonWriter, Object value, Type objectType)\r\n   at System.Net.Http.Formatting.BaseJsonMediaTypeFormatter.WriteToStream(Type type, Object value, Stream writeStream, Encoding effectiveEncoding)\r\n   at System.Net.Http.Formatting.JsonMediaTypeFormatter.WriteToStream(Type type, Object value, Stream writeStream, Encoding effectiveEncoding)\r\n   at System.Net.Http.Formatting.BaseJsonMediaTypeFormatter.WriteToStreamAsync(Type type, Object value, Stream writeStream, HttpContent content, TransportContext transportContext, CancellationToken cancellationToken)\r\n--- End of stack trace from previous location where exception was thrown ---\r\n   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)\r\n   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)\r\n   at System.Web.Http.WebHost.HttpControllerHandler.<WriteBufferedResponseContentAsync>d__1b.MoveNext()"}}
+
+
+Token Usage
+===========
+
+Without Token
+
+GET http://localhost/WEBAPIProject/Getall HTTP/1.1
+accept: application/JSON
+content-type: application/x-www-form-urlencoded
+Host: localhost
+Content-Length: 0
+
+{"Message":"Authorization has been denied for this request."}
+
+With Token
+
+GET http://localhost:18387/Getall HTTP/1.1
+Authorization: Bearer 1q9-VG7PVagVcxYjObjmHqRhLH0UhSvjlCZ_JppHfZJAjHqtz2c5sxyu4b2ZNz-mwDWwcIganBpbKJJkAs-FixET3tHoMg34og6BXWULz9UMB1ziCz_C16kM2HIdK0ZBTZK78NaWokk_PYV9QW1AyL8VI2pSi-6KLTGx38C411pBVi4Cc-EJafS4SX0t-r4wuWgdMmMMFlCc4FzUvvkeTJk6xrF_79atsfzBTlEwDeoHe89NUkwGIsrZvIY6jhkS
+Host: localhost:18387
+
+
+[{"CustID":3,"Name":"Boopal","Email":"boopal@tcs.com","Address":"address111","Contact":"9999999999","BirthDate":null,"TranDate":"2016-10-01T15:41:43.06"},{"CustID":5,"Name":"Karthik","Email":"karthik@tcs.com","Address":"address111","Contact":"9999999999","BirthDate":null,"TranDate":"2016-10-01T15:41:43.06"},{"CustID":7,"Name":"NoID","Email":"boopal@tcs.com","Address":"address111","Contact":"9999999999","BirthDate":null,"TranDate":"2016-10-01T15:41:43.06"},{"CustID":4,"Name":"Prem","Email":"prem@tcs.com","Address":"address111","Contact":"9999999999","BirthDate":null,"TranDate":"2016-10-01T15:41:43.06"},{"CustID":1,"Name":"Rajmohan","Email":"rajmohan@tcs.com","Address":"address111","Contact":"9999998889","BirthDate":null,"TranDate":"2016-10-01T15:41:43.01"},{"CustID":9,"Name":"RajmohanPOST","Email":"rajmohan@tcs.com","Address":"address111","Contact":"9999999999","BirthDate":null,"TranDate":"2016-10-01T15:41:43.01"},{"CustID":2,"Name":"Sai","Email":"sai@tcs.com","Address":"address111","Contact":"9999999999","BirthDate":null,"TranDate":"2016-10-01T15:41:43.043"},{"CustID":6,"Name":"Siraj","Email":"sira.deen@gmail.com","Address":"Address","Contact":"9944777777","BirthDate":null,"TranDate":null}]
+
+
+Basic Authentication
+=====================
+
+GET http://localhost:18387/getbyid/1 HTTP/1.1
+User-Agent: Fiddler
+accept: application/JSON
+Content-Type: application/JSON
+Authorization: Basic VEVTVDpURVNU
+Host: localhost:18387
+
+{"CustID":1,"Name":"Rajmohan","Email":"rajmohan@tcs.com","Address":"address111","Contact":"9999998889","BirthDate":null,"TranDate":"2016-10-01T15:41:43.01"}
+

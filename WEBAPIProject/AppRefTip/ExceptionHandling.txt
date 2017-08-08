@@ -1,0 +1,21 @@
+﻿Using HttpResponseException 
+
+This exception class allows us to return HttpResponseMessage to the client. It returns HTTP status code that is specified in the exception Constructor. 
+
+Using HttpError
+
+CreateErrorResponse method of Request object helps us to return meaningful error code and message to the client. CreateErrorResponse creates an instance of HttpError object and returns it as HttpResponseMessage object.The response matches with Content negotiation
+
+Using Exception Filters
+
+Exception filters can be used to handle unhandled exceptions which are generated in Web API. 
+
+Using Exception Handlers
+
+Normally, exception filter is used to catch the unhandled exception. This approach will work fine but it fails if any error is raised from outside action. For example, if any error is raised in the following area then exception filter will not work.
+Error inside the exception filter.
+Exception related to routing.
+Error inside the Message Handlers class.
+Error in Controller Constructor.
+
+Reference Link - http://www.c-sharpcorner.com/article/exception-handling-in-asp-net-web-api/
